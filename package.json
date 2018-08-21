@@ -5,7 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "postinstall": "npm run build",
+    "start": "node server.js",
   },
   "dependencies": {
     "vue": "^2.5.17",
@@ -17,8 +19,10 @@
     "@vue/cli-plugin-eslint": "^3.0.1",
     "@vue/cli-service": "^3.0.1",
     "@vue/eslint-config-prettier": "^3.0.1",
+    "express": "^4.16.3",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
+    "serve-static": "^1.13.2",
     "vue-template-compiler": "^2.5.17"
   }
 }
