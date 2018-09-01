@@ -10,9 +10,11 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "purecss": "^1.0.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "wanakana": "^4.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",
