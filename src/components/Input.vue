@@ -5,7 +5,7 @@
         <p>Target is: <span :class="{ error: !empty && !fullMatch && !partialMatch, partial: !empty && !fullMatch && partialMatch, done: !empty && fullMatch }">{{ targetValue }}</span></p>
       </div>
       <div class="pure-u-1 center">
-        <input v-model="inputValue" @keyup="handleKeyUp" @keyup.space="submit">
+        <input id="kanako-input" v-model="inputValue" @keyup="handleKeyUp" @keyup.space="submit">
         <p>Value is: {{ inputValue }}</p>
       </div>
     </div>
@@ -13,17 +13,20 @@
 </template>
 
 <script>
+import { toHiragana } from "wanakana";
+
 export default {
   name: "Input",
   data: function() {
     return {
       inputValue: "",
-      targetValue: "abc",
+      targetValue: "あいうえお",
       initial: true
     };
   },
   methods: {
     handleKeyUp: function() {
+      this.inputValue = toHiragana(this.inputValue);
       if (this.inputValue.length === 0) {
         this.initial = true;
       } else {
