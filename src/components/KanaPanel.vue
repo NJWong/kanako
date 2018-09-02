@@ -3,19 +3,21 @@
     <form class="pure-form" @submit.prevent>
       <div class="pure-g">
         <div class="pure-u-1 target-container">
-          <p><span :class="{ error: hasError, warning: hasPartialMatch, success: hasFullMatch }">{{ targetValue }}</span></p>
+          <div class="text-container">
+            <span :class="{ error: hasError, warning: hasPartialMatch, success: hasFullMatch }">{{ targetValue }}</span>
+          </div>
         </div>
         <div class="pure-u-1 input-container">
           <input v-model="inputValue" @keyup="handleKeyUp" @keyup.space="submit" @keyup.enter="submit">
-          <p>Time: <span>{{ countdown }}</span></p>
-          <p>Correct: <span class="success">{{ correct }}</span></p>
-          <p>Incorrect: <span class="error">{{ incorrect }}</span></p>
+          <p class="countdown">Time remaining: <span>{{ countdown }} seconds</span></p>
         </div>
       </div>
     </form>
   </div>
   <div class="game-stats" v-else>
     <h2>Game over!</h2>
+    <p>Correct: <span class="success">{{ correct }}</span></p>
+    <p>Incorrect: <span class="error">{{ incorrect }}</span></p>
     <p>You got <span class="success">{{ correct }} correct</span> out of {{ correct + incorrect }} words!</p>
     <p>That's an average of <span class="success">{{ gameCPM }} kana</span> per minute</p>
     <p>Your running total average is <span class="success">{{ averageCPM }}</span></p>
@@ -40,7 +42,7 @@ export default {
       correct: 0,
       incorrect: 0,
       gameCPM: 0,
-      countdown: 30,
+      countdown: 60,
       gameRunning: false
     };
   },
@@ -86,7 +88,7 @@ export default {
       this.correct = 0;
       this.incorrect = 0;
       this.gameCPM = 0;
-      this.countdown = 30;
+      this.countdown = 60;
       this.inputValue = "";
       this.clearStatus();
       this.generateNextValue();
@@ -160,7 +162,7 @@ export default {
     },
     calculateScore: function() {
       const correctCharacters = this.correct * 3;
-      const timeFactor = 30 / 60; // 30 seconds
+      const timeFactor = 60 / 60;
       this.gameCPM = correctCharacters * timeFactor;
 
       this.$store.commit("updateAverageCPM", this.gameCPM);
@@ -172,18 +174,49 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+$success-green: rgb(76, 217, 100);
+$warning-orange: rgb(255, 149, 0);
+$error-red: rgb(255, 59, 48);
+$white: rgb(255, 255, 255);
+
 .game-panel,
 .game-stats {
   text-align: center;
 }
 
-.success {
-  color: green;
+.target-container {
+  .text-container {
+    font-size: 30px;
+    padding: 20px 0;
+  }
+
+  span {
+    padding: 0 10px;
+    transition: color 0.15s;
+
+    &.success {
+      color: $success-green;
+    }
+
+    &.warning {
+      color: $warning-orange;
+    }
+
+    &.error {
+      color: $error-red;
+    }
+  }
 }
-.warning {
-  color: orange;
+
+.input-container {
+  input {
+    font-size: 20px;
+    text-align: center;
+  }
 }
-.error {
-  color: red;
+
+.countdown {
+  font-size: 16px;
+  font-style: italic;
 }
 </style>
