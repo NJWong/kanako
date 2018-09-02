@@ -46,7 +46,7 @@ export default {
       correct: 0,
       incorrect: 0,
       gameCPM: 0,
-      countdown: 10,
+      countdown: 30,
       gameRunning: false
     };
   },
@@ -92,7 +92,7 @@ export default {
       this.correct = 0;
       this.incorrect = 0;
       this.gameCPM = 0;
-      this.countdown = 10;
+      this.countdown = 30;
       this.clearStatus();
       this.generateNextValue();
     },
