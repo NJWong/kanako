@@ -106,7 +106,7 @@ export default {
 
       // Randomly generate next value
       for (let i = 0; i < 3; i++) {
-        const index = Math.floor(Math.random() * Math.floor(kanaCount - 1));
+        const index = Math.floor(Math.random() * Math.floor(kanaCount));
         nextValue += kanaList[index];
       }
 
