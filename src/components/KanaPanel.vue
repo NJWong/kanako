@@ -1,22 +1,24 @@
 <template>
-  <div class="game-panel center" v-if="showGame">
+  <div class="game-panel" v-if="showGame">
     <form class="pure-form" @submit.prevent>
       <div class="pure-g">
-        <div class="pure-u-1">
-          <p><span :class="{ error: hasError, partial: hasPartialMatch, done: hasFullMatch }">{{ targetValue }}</span></p>
+        <div class="pure-u-1 target-container">
+          <p><span :class="{ error: hasError, warning: hasPartialMatch, success: hasFullMatch }">{{ targetValue }}</span></p>
         </div>
-        <div class="pure-u-1">
+        <div class="pure-u-1 input-container">
           <input v-model="inputValue" @keyup="handleKeyUp" @keyup.space="submit" @keyup.enter="submit">
           <p>Time: <span>{{ countdown }}</span></p>
-          <p>Correct: <span class="done">{{ correct }}</span></p>
+          <p>Correct: <span class="success">{{ correct }}</span></p>
           <p>Incorrect: <span class="error">{{ incorrect }}</span></p>
         </div>
       </div>
     </form>
   </div>
-  <div class="game-stats center" v-else>
+  <div class="game-stats" v-else>
     <h2>Game over!</h2>
-    <p>You got <span class="done">{{ correct }} correct</span> out of {{ correct + incorrect }} words!</p>
+    <p>You got <span class="success">{{ correct }} correct</span> out of {{ correct + incorrect }} words!</p>
+    <p>That's an average of <span class="success">{{ gameCPM }} kana</span> per minute</p>
+    <p>Your running total average is <span class="success">{{ averageCPM }}</span></p>
     <button class="pure-button pure-button-primary" @click="reset">Try again!</button>
   </div>
 </template>
@@ -30,7 +32,6 @@ export default {
   data: function() {
     return {
       showGame: true,
-      difficulty: 10,
       inputValue: "",
       targetValue: "",
       hasError: false,
@@ -38,6 +39,7 @@ export default {
       hasFullMatch: false,
       correct: 0,
       incorrect: 0,
+      gameCPM: 0,
       countdown: 30,
       gameRunning: false
     };
@@ -45,6 +47,14 @@ export default {
   mounted: function() {
     // Generate the first target value
     this.generateNextValue();
+  },
+  computed: {
+    difficulty: function() {
+      return this.$store.state.difficulty;
+    },
+    averageCPM: function() {
+      return this.$store.state.averageCPM;
+    }
   },
   methods: {
     start: function() {
@@ -68,12 +78,14 @@ export default {
     stop: function() {
       this.showGame = false;
       this.gameRunning = false;
+      this.calculateScore();
     },
     reset: function() {
       this.showGame = true;
       this.gameRunning = false;
       this.correct = 0;
       this.incorrect = 0;
+      this.gameCPM = 0;
       this.countdown = 30;
       this.inputValue = "";
       this.clearStatus();
@@ -145,6 +157,14 @@ export default {
 
       // Get next target value
       this.generateNextValue();
+    },
+    calculateScore: function() {
+      const correctCharacters = this.correct * 3;
+      const timeFactor = 30 / 60; // 30 seconds
+      this.gameCPM = correctCharacters * timeFactor;
+
+      this.$store.commit("updateAverageCPM", this.gameCPM);
+      this.$store.commit("increaseGameCount");
     }
   }
 };
@@ -152,16 +172,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.center {
+.game-panel,
+.game-stats {
   text-align: center;
+}
+
+.success {
+  color: green;
+}
+.warning {
+  color: orange;
 }
 .error {
   color: red;
-}
-.partial {
-  color: orange;
-}
-.done {
-  color: green;
 }
 </style>
