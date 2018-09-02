@@ -17,7 +17,7 @@
   <div class="game-stats center" v-else>
     <h2>Game over!</h2>
     <p>You got <span class="done">{{ correct }} correct</span> out of {{ correct + incorrect }} words!</p>
-    <button class="pure-button pure-button-primary" @click="reset">Try again?</button>
+    <button class="pure-button pure-button-primary" @click="reset">Try again!</button>
   </div>
 </template>
 
@@ -25,7 +25,7 @@
 import { toHiragana } from "wanakana";
 
 export default {
-  name: "Input",
+  name: "KanaPanel",
   data: function() {
     return {
       showGame: true,
