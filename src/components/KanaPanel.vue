@@ -23,12 +23,14 @@
 
 <script>
 import { toHiragana } from "wanakana";
+import { generateKanaList } from "@/data/kana";
 
 export default {
   name: "KanaPanel",
   data: function() {
     return {
       showGame: true,
+      difficulty: 10,
       inputValue: "",
       targetValue: "",
       hasError: false,
@@ -78,12 +80,8 @@ export default {
       this.generateNextValue();
     },
     generateNextValue: function() {
-      // Create kana by line
-      const aLine = ["あ", "い", "う", "え", "お"];
-      const kaLine = ["か", "き", "く", "け", "こ"];
-
       // Create kana list and total count
-      const kanaList = [].concat(aLine, kaLine);
+      const kanaList = generateKanaList(this.difficulty);
       const kanaCount = kanaList.length;
 
       // Init next value
