@@ -8,7 +8,7 @@
           </div>
         </div>
         <div class="pure-u-1 input-container">
-          <input class="pure-u-1-3" v-model="inputValue" @keyup="handleKeyUp" @keyup.space="submit" @keyup.enter="submit">
+          <KanaInput :handleKeyUp="handleKeyUp" :submit="submit"></KanaInput>
           <p class="countdown">Time remaining: <span>{{ countdown }} seconds</span></p>
         </div>
       </div>
@@ -26,11 +26,15 @@
 </template>
 
 <script>
-import { toHiragana, toRomaji } from "wanakana";
+import * as wanakana from "wanakana";
 import { generateKanaList } from "@/data/kana";
+import KanaInput from "@/components/KanaInput";
 
 export default {
   name: "KanaPanel",
+  components: {
+    KanaInput
+  },
   data: function() {
     return {
       showGame: true,
@@ -42,7 +46,7 @@ export default {
       correct: 0,
       incorrect: 0,
       gameCPM: 0,
-      countdown: 60,
+      countdown: 10,
       gameRunning: false
     };
   },
@@ -88,8 +92,7 @@ export default {
       this.correct = 0;
       this.incorrect = 0;
       this.gameCPM = 0;
-      this.countdown = 60;
-      this.inputValue = "";
+      this.countdown = 10;
       this.clearStatus();
       this.generateNextValue();
     },
@@ -110,26 +113,22 @@ export default {
       // Set target value to randomly generated new value
       this.targetValue = nextValue;
     },
-    handleKeyUp: function() {
+    handleKeyUp: function(inputValue) {
       // Start the game if not already running
       if (!this.gameRunning) {
         this.start();
       }
 
-      // Convert input value to Romaji then to Hiragana
-      // Case: When you want to write "ぬ" but inputValue is converted to "ん" before you can type the "u".
-      this.inputValue = toHiragana(toRomaji(this.inputValue)).trim();
-
       // Clear previous status
       this.clearStatus();
 
-      const inputValueRomaji = toRomaji(this.inputValue);
-      const targetValueRomaji = toRomaji(this.targetValue);
+      const inputValueRomaji = wanakana.toRomaji(inputValue);
+      const targetValueRomaji = wanakana.toRomaji(this.targetValue);
 
       // Check input value is not empty
-      if (this.inputValue.length > 0) {
+      if (inputValue.length > 0) {
         // Check for full match
-        if (this.inputValue === this.targetValue) {
+        if (inputValue === this.targetValue) {
           this.hasFullMatch = true;
         }
         // Check for partial match using Romaji conversion
@@ -142,23 +141,23 @@ export default {
         }
       }
     },
-    clearStatus() {
-      this.hasError = false;
-      this.hasPartialMatch = false;
-      this.hasFullMatch = false;
-    },
-    submit: function() {
+    submit: function(inputRef) {
       // Update score
-      this.inputValue === this.targetValue
+      inputRef.value.trim() === this.targetValue
         ? (this.correct += 1)
         : (this.incorrect += 1);
 
       // Reset input field and statuses
-      this.inputValue = "";
+      inputRef.value = "";
       this.clearStatus();
 
       // Get next target value
       this.generateNextValue();
+    },
+    clearStatus() {
+      this.hasError = false;
+      this.hasPartialMatch = false;
+      this.hasFullMatch = false;
     },
     calculateScore: function() {
       const correctCharacters = this.correct * 3;
