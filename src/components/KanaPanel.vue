@@ -1,14 +1,14 @@
 <template>
-  <div class="game-panel" v-if="showGame">
+  <div class="kana-panel" v-if="showGame">
     <form class="pure-form" @submit.prevent>
       <div class="pure-g">
         <div class="pure-u-1 target-container">
-          <div class="text-container">
+          <div class="pure-u-1-3 text-container">
             <span :class="{ error: hasError, warning: hasPartialMatch, success: hasFullMatch }">{{ targetValue }}</span>
           </div>
         </div>
         <div class="pure-u-1 input-container">
-          <input v-model="inputValue" @keyup="handleKeyUp" @keyup.space="submit" @keyup.enter="submit">
+          <input class="pure-u-1-3" v-model="inputValue" @keyup="handleKeyUp" @keyup.space="submit" @keyup.enter="submit">
           <p class="countdown">Time remaining: <span>{{ countdown }} seconds</span></p>
         </div>
       </div>
@@ -177,9 +177,10 @@ export default {
 $success-green: rgb(76, 217, 100);
 $warning-orange: rgb(255, 149, 0);
 $error-red: rgb(255, 59, 48);
+$teal-blue: rgb(90, 200, 250);
 $white: rgb(255, 255, 255);
 
-.game-panel,
+.kana-panel,
 .game-stats {
   text-align: center;
 }
@@ -187,12 +188,15 @@ $white: rgb(255, 255, 255);
 .target-container {
   .text-container {
     font-size: 30px;
-    padding: 20px 0;
+    margin: 20px 0;
+    border: 1px dashed #e1e1e1;
   }
 
   span {
-    padding: 0 10px;
+    display: block;
+    padding: 10px 20px;
     transition: color 0.15s;
+    background-color: $white;
 
     &.success {
       color: $success-green;
@@ -212,6 +216,10 @@ $white: rgb(255, 255, 255);
   input {
     font-size: 20px;
     text-align: center;
+
+    &:focus {
+      border-color: $teal-blue;
+    }
   }
 }
 
