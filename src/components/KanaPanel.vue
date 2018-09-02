@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { toHiragana } from "wanakana";
+import { toHiragana, toRomaji } from "wanakana";
 import { generateKanaList } from "@/data/kana";
 
 export default {
@@ -102,11 +102,15 @@ export default {
         this.start();
       }
 
-      // Convert input value to hiragana
-      this.inputValue = toHiragana(this.inputValue).trim();
+      // Convert input value to Romaji then to Hiragana
+      // Case: When you want to write "ぬ" but inputValue is converted to "ん" before you can type the "u".
+      this.inputValue = toHiragana(toRomaji(this.inputValue)).trim();
 
       // Clear previous status
       this.clearStatus();
+
+      const inputValueRomaji = toRomaji(this.inputValue);
+      const targetValueRomaji = toRomaji(this.targetValue);
 
       // Check input value is not empty
       if (this.inputValue.length > 0) {
@@ -114,8 +118,8 @@ export default {
         if (this.inputValue === this.targetValue) {
           this.hasFullMatch = true;
         }
-        // Check for partial match
-        else if (this.targetValue.indexOf(this.inputValue) === 0) {
+        // Check for partial match using Romaji conversion
+        else if (targetValueRomaji.indexOf(inputValueRomaji) === 0) {
           this.hasPartialMatch = true;
         }
         // If not full or partial match, then there is an error
