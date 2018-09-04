@@ -16,12 +16,29 @@
   </div>
   <div class="game-stats" v-else>
     <h2>Game over!</h2>
-    <p>Correct: <span class="success">{{ correct }}</span></p>
-    <p>Incorrect: <span class="error">{{ incorrect }}</span></p>
-    <p>You got <span class="success">{{ correct }} correct</span> out of {{ correct + incorrect }} words!</p>
-    <p>That's an average of <span class="success">{{ gameCPM }} kana</span> per minute</p>
-    <p>Your running total average is <span class="success">{{ averageCPM }}</span></p>
+    <table class="pure-table pure-table-horizontal results-table">
+      <thead>
+        <tr>
+          <th colspan="2">Results</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>CPM*</td>
+          <td>{{ gameCPM }}</td>
+        </tr>
+        <tr>
+          <td>Score</td>
+          <td>{{ correct }} / {{ correct + incorrect }}</td>
+        </tr>
+        <tr>
+          <td>Average CPM*</td>
+          <td>{{ averageCPM }}</td>
+        </tr>
+      </tbody>
+    </table>
     <button class="pure-button pure-button-primary" @click="reset">Try again!</button>
+    <h5>*CPM = Characters Per Minute</h5>
   </div>
 </template>
 
@@ -196,19 +213,19 @@ $white: rgb(255, 255, 255);
     padding: 10px 20px;
     transition: color 0.15s;
     background-color: $white;
-
-    &.success {
-      color: $success-green;
-    }
-
-    &.warning {
-      color: $warning-orange;
-    }
-
-    &.error {
-      color: $error-red;
-    }
   }
+}
+
+.success {
+  color: $success-green;
+}
+
+.warning {
+  color: $warning-orange;
+}
+
+.error {
+  color: $error-red;
 }
 
 .input-container {
@@ -219,6 +236,14 @@ $white: rgb(255, 255, 255);
     &:focus {
       border-color: $teal-blue;
     }
+  }
+}
+
+.results-table {
+  margin: 25px auto;
+
+  thead {
+    text-align: center;
   }
 }
 
