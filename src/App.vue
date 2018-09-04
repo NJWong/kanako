@@ -1,12 +1,23 @@
 <template>
   <div id="app">
-    <div id="nav">
-    </div>
+    <TheNav/>
     <div class="app-content">
       <router-view/>
     </div>
   </div>
 </template>
+
+<script>
+// @ is an alias to /src
+import TheNav from "@/components/Global/TheNav.vue";
+
+export default {
+  name: "app",
+  components: {
+    TheNav
+  }
+};
+</script>
 
 <style lang="scss">
 body {
