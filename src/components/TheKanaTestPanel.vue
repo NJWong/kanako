@@ -48,7 +48,7 @@ import { generateKanaList } from "@/data/kana";
 import KanaInput from "@/components/KanaInput";
 
 export default {
-  name: "KanaPanel",
+  name: "TheKanaTestPanel",
   components: {
     KanaInput
   },

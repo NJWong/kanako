@@ -1,17 +1,17 @@
 <template>
   <div class="home">
-    <KanaPanel/>
+    <TheHomePanel/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import KanaPanel from "@/components/KanaPanel.vue";
+import TheHomePanel from "@/components/TheHomePanel.vue";
 
 export default {
   name: "home",
   components: {
-    KanaPanel
+    TheHomePanel
   }
 };
 </script>
