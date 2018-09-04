@@ -1,13 +1,13 @@
 <template>
   <div class="kana-panel" v-if="showTest">
-    <form class="pure-form" @submit.prevent>
-      <div class="pure-g">
-        <div class="pure-u-1 target-container">
-          <div class="pure-u-1-3 text-container">
+    <form @submit.prevent>
+      <div>
+        <div class="target-container">
+          <div class="text-container">
             <span :class="{ error: hasError, warning: hasPartialMatch, success: hasFullMatch }">{{ targetValue }}</span>
           </div>
         </div>
-        <div class="pure-u-1 input-container">
+        <div class="input-container">
           <KanaInput :handleKeyUp="handleKeyUp" :submit="submit"></KanaInput>
           <p class="countdown">Time remaining: <span>{{ countdown }} seconds</span></p>
         </div>
@@ -16,7 +16,7 @@
   </div>
   <div class="test-stats" v-else>
     <h2>Game over!</h2>
-    <table class="pure-table pure-table-horizontal results-table">
+    <table class="results-table">
       <thead>
         <tr>
           <th colspan="2">Results</th>
@@ -37,7 +37,7 @@
         </tr>
       </tbody>
     </table>
-    <button class="pure-button pure-button-primary" @click="reset">Try again!</button>
+    <button @click="reset">Try again!</button>
     <h5>*CPM = Characters Per Minute</h5>
   </div>
 </template>

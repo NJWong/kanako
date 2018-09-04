@@ -1,5 +1,5 @@
 <template>
-  <input id="kana-input" class="pure-u-1-3" ref="kana-input" @keyup="handleKeyUp(inputValue())" @keyup.space="submit(inputRef())" @keyup.enter="submit(inputRef())">
+  <input id="kana-input" ref="kana-input" @keyup="handleKeyUp(inputValue())" @keyup.space="submit(inputRef())" @keyup.enter="submit(inputRef())">
 </template>
 
 <script>
