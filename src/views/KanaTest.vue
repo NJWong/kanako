@@ -6,7 +6,7 @@
 
 <script>
 // @ is an alias to /src
-import TheKanaTestPanel from "@/components/TheKanaTestPanel.vue";
+import TheKanaTestPanel from "@/components/KanaTest/TheKanaTestPanel.vue";
 
 export default {
   name: "kana-test",

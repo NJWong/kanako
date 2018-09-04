@@ -1,5 +1,5 @@
 <template>
-  <div class="kana-panel" v-if="showGame">
+  <div class="kana-panel" v-if="showTest">
     <form class="pure-form" @submit.prevent>
       <div class="pure-g">
         <div class="pure-u-1 target-container">
@@ -14,7 +14,7 @@
       </div>
     </form>
   </div>
-  <div class="game-stats" v-else>
+  <div class="test-stats" v-else>
     <h2>Game over!</h2>
     <table class="pure-table pure-table-horizontal results-table">
       <thead>
@@ -25,7 +25,7 @@
       <tbody>
         <tr>
           <td>CPM*</td>
-          <td>{{ gameCPM }}</td>
+          <td>{{ testCPM }}</td>
         </tr>
         <tr>
           <td>Score</td>
@@ -45,7 +45,7 @@
 <script>
 import * as wanakana from "wanakana";
 import { generateKanaList } from "@/data/kana";
-import KanaInput from "@/components/KanaInput";
+import KanaInput from "@/components/KanaTest/KanaInput";
 
 export default {
   name: "TheKanaTestPanel",
@@ -54,7 +54,7 @@ export default {
   },
   data: function() {
     return {
-      showGame: true,
+      showTest: true,
       inputValue: "",
       targetValue: "",
       hasError: false,
@@ -62,9 +62,9 @@ export default {
       hasFullMatch: false,
       correct: 0,
       incorrect: 0,
-      gameCPM: 0,
+      testCPM: 0,
       countdown: 30,
-      gameRunning: false
+      testRunning: false
     };
   },
   mounted: function() {
@@ -81,8 +81,8 @@ export default {
   },
   methods: {
     start: function() {
-      // Start the game
-      this.gameRunning = true;
+      // Start the test
+      this.testRunning = true;
 
       // Set the countdown
       var timer = setInterval(
@@ -99,16 +99,16 @@ export default {
       );
     },
     stop: function() {
-      this.showGame = false;
-      this.gameRunning = false;
+      this.showTest = false;
+      this.testRunning = false;
       this.calculateScore();
     },
     reset: function() {
-      this.showGame = true;
-      this.gameRunning = false;
+      this.showTest = true;
+      this.testRunning = false;
       this.correct = 0;
       this.incorrect = 0;
-      this.gameCPM = 0;
+      this.testCPM = 0;
       this.countdown = 30;
       this.clearStatus();
       this.generateNextValue();
@@ -131,8 +131,8 @@ export default {
       this.targetValue = nextValue;
     },
     handleKeyUp: function(inputValue) {
-      // Start the game if not already running
-      if (!this.gameRunning) {
+      // Start the test if not already running
+      if (!this.testRunning) {
         this.start();
       }
 
@@ -179,9 +179,9 @@ export default {
     calculateScore: function() {
       const correctCharacters = this.correct * 3;
       const timeFactor = 60 / 60;
-      this.gameCPM = correctCharacters * timeFactor;
+      this.testCPM = correctCharacters * timeFactor;
 
-      this.$store.commit("updateAverageCPM", this.gameCPM);
+      this.$store.commit("updateAverageCPM", this.testCPM);
       this.$store.commit("increaseGameCount");
     }
   }
@@ -197,7 +197,7 @@ $teal-blue: rgb(90, 200, 250);
 $white: rgb(255, 255, 255);
 
 .kana-panel,
-.game-stats {
+.test-stats {
   text-align: center;
 }
 
