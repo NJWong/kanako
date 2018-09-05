@@ -1,5 +1,5 @@
 <template>
-  <div class="kana-panel" v-if="showTest">
+  <div class="kana-panel">
     <form @submit.prevent>
       <div>
         <div class="target-container">
@@ -8,78 +8,48 @@
           </div>
         </div>
         <div class="input-container">
-          <KanaInput :handleKeyUp="handleKeyUp" :submit="submit"></KanaInput>
+          <input id="kana-input" ref="kana-input" @keyup="handleKeyUp(inputValue)" @keyup.space="submit(inputRef())" @keyup.enter="submit(inputRef())">
           <p class="countdown">Time remaining: <span>{{ countdown }} seconds</span></p>
         </div>
       </div>
     </form>
-  </div>
-  <div class="test-stats" v-else>
-    <h2>Game over!</h2>
-    <table class="results-table">
-      <thead>
-        <tr>
-          <th colspan="2">Results</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>CPM*</td>
-          <td>{{ testCPM }}</td>
-        </tr>
-        <tr>
-          <td>Score</td>
-          <td>{{ correct }} / {{ correct + incorrect }}</td>
-        </tr>
-        <tr>
-          <td>Average CPM*</td>
-          <td>{{ averageCPM }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <button @click="reset">Try again!</button>
-    <h5>*CPM = Characters Per Minute</h5>
   </div>
 </template>
 
 <script>
 import * as wanakana from "wanakana";
 import { generateKanaList } from "@/data/kana";
-import KanaInput from "@/components/KanaTest/KanaInput";
 
 export default {
-  name: "TheKanaTestPanel",
-  components: {
-    KanaInput
-  },
+  name: "KanaTestInput",
   data: function() {
     return {
-      showTest: true,
       inputValue: "",
       targetValue: "",
+      testRunning: false,
       hasError: false,
       hasPartialMatch: false,
       hasFullMatch: false,
       correct: 0,
       incorrect: 0,
-      testCPM: 0,
-      countdown: 30,
-      testRunning: false
+      countdown: 10,
+      testCPM: 0
     };
   },
+  props: {
+    stopTest: Function
+  },
   mounted: function() {
+    // Bind the kana input to `wanakana`
+    wanakana.bind(document.getElementById("kana-input"));
+
     // Generate the first target value
     this.generateNextValue();
   },
-  computed: {
-    difficulty: function() {
-      return this.$store.state.difficulty;
-    },
-    averageCPM: function() {
-      return this.$store.state.averageCPM;
-    }
-  },
   methods: {
+    inputRef: function() {
+      return this.$refs["kana-input"];
+    },
     start: function() {
       // Start the test
       this.testRunning = true;
@@ -99,36 +69,9 @@ export default {
       );
     },
     stop: function() {
-      this.showTest = false;
+      this.stopTest();
       this.testRunning = false;
       this.calculateScore();
-    },
-    reset: function() {
-      this.showTest = true;
-      this.testRunning = false;
-      this.correct = 0;
-      this.incorrect = 0;
-      this.testCPM = 0;
-      this.countdown = 30;
-      this.clearStatus();
-      this.generateNextValue();
-    },
-    generateNextValue: function() {
-      // Create kana list and total count
-      const kanaList = generateKanaList(this.difficulty);
-      const kanaCount = kanaList.length;
-
-      // Init next value
-      let nextValue = "";
-
-      // Randomly generate next value
-      for (let i = 0; i < 3; i++) {
-        const index = Math.floor(Math.random() * Math.floor(kanaCount));
-        nextValue += kanaList[index];
-      }
-
-      // Set target value to randomly generated new value
-      this.targetValue = nextValue;
     },
     handleKeyUp: function(inputValue) {
       // Start the test if not already running
@@ -176,6 +119,23 @@ export default {
       this.hasPartialMatch = false;
       this.hasFullMatch = false;
     },
+    generateNextValue: function() {
+      // Create kana list and total count
+      const kanaList = generateKanaList(this.difficulty);
+      const kanaCount = kanaList.length;
+
+      // Init next value
+      let nextValue = "";
+
+      // Randomly generate next value
+      for (let i = 0; i < 3; i++) {
+        const index = Math.floor(Math.random() * Math.floor(kanaCount));
+        nextValue += kanaList[index];
+      }
+
+      // Set target value to randomly generated new value
+      this.targetValue = nextValue;
+    },
     calculateScore: function() {
       const correctCharacters = this.correct * 3;
       const timeFactor = 60 / 60;
@@ -184,22 +144,21 @@ export default {
       this.$store.commit("updateAverageCPM", this.testCPM);
       this.$store.commit("increaseGameCount");
     }
+  },
+  computed: {
+    difficulty: function() {
+      return this.$store.state.difficulty;
+    }
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 $success-green: rgb(76, 217, 100);
 $warning-orange: rgb(255, 149, 0);
 $error-red: rgb(255, 59, 48);
 $teal-blue: rgb(90, 200, 250);
 $white: rgb(255, 255, 255);
-
-.kana-panel,
-.test-stats {
-  text-align: center;
-}
 
 .target-container {
   .text-container {
@@ -236,14 +195,6 @@ $white: rgb(255, 255, 255);
     &:focus {
       border-color: $teal-blue;
     }
-  }
-}
-
-.results-table {
-  margin: 25px auto;
-
-  thead {
-    text-align: center;
   }
 }
 

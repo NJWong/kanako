@@ -9,7 +9,7 @@
 import TheHomePanel from "@/components/Home/TheHomePanel.vue";
 
 export default {
-  name: "home",
+  name: "Home",
   components: {
     TheHomePanel
   }

@@ -1,17 +1,17 @@
 <template>
   <div class="kana-test">
-    <TheKanaTestPanel/>
+    <TheKanaTest/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import TheKanaTestPanel from "@/components/KanaTest/TheKanaTestPanel.vue";
+import TheKanaTest from "@/components/KanaTest/_TheKanaTest.vue";
 
 export default {
-  name: "kana-test",
+  name: "KanaTest",
   components: {
-    TheKanaTestPanel
+    TheKanaTest
   }
 };
 </script>
