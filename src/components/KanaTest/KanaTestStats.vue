@@ -22,7 +22,7 @@
         </tr>
       </tbody>
     </table>
-    <button>Try again!</button>
+    <button class="button is-primary" @click="reset">Try again!</button>
     <h5>*CPM = Characters Per Minute</h5>
   </div>
 </template>
@@ -33,18 +33,9 @@ export default {
   data: function() {
     return {};
   },
-  method: {
+  methods: {
     reset: function() {
-      console.warn("Reset");
-
-      // this.showTest = true;
-      // this.testRunning = false;
-      // this.correct = 0;
-      // this.incorrect = 0;
-      // this.testCPM = 0;
-      // this.countdown = 30;
-      // this.clearStatus();
-      // this.generateNextValue();
+      this.$store.dispatch("resetTest");
     }
   },
   computed: {

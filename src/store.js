@@ -12,7 +12,8 @@ export default new Vuex.Store({
       running: false,
       correct: 0,
       incorrect: 0,
-      currentCPM: 0
+      currentCPM: 0,
+      showTest: true
     }
   },
   mutations: {
@@ -30,9 +31,11 @@ export default new Vuex.Store({
     },
     startTest: function(state) {
       state.KanaTest.running = true;
+      state.KanaTest.showTest = true;
     },
     stopTest: function(state) {
       state.KanaTest.running = false;
+      state.KanaTest.showTest = false;
     },
     incrementCorrect: function(state) {
       state.KanaTest.correct += 1;
@@ -42,6 +45,12 @@ export default new Vuex.Store({
     },
     updateCurrentCPM: function(state, currentCPM) {
       state.KanaTest.currentCPM = currentCPM;
+    },
+    resetTest: function(state) {
+      state.KanaTest.currentCPM = 0;
+      state.KanaTest.correct = 0;
+      state.KanaTest.incorrect = 0;
+      state.KanaTest.showTest = true;
     }
   },
   actions: {
@@ -78,6 +87,9 @@ export default new Vuex.Store({
     },
     updateCurrentCPM: function(context, payload) {
       context.commit("updateCurrentCPM", payload.currentCPM);
+    },
+    resetTest: function(context) {
+      context.commit("resetTest");
     }
   }
 });

@@ -1,5 +1,5 @@
 <template>
-  <KanaTestInput :stopTest="stopTest" v-if="showTest"/>
+  <KanaTestInput v-if="showTest"/>
   <KanaTestStats v-else/>
 </template>
 
@@ -14,14 +14,12 @@ export default {
     KanaTestStats
   },
   data: function() {
-    return {
-      showTest: true
-    };
+    return {};
   },
-  computed: {},
-  methods: {
-    stopTest: function() {
-      this.showTest = false;
+  methods: {},
+  computed: {
+    showTest: function() {
+      return this.$store.state.KanaTest.showTest;
     }
   }
 };

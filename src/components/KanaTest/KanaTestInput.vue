@@ -32,9 +32,6 @@ export default {
       countdown: 10
     };
   },
-  props: {
-    stopTest: Function
-  },
   mounted: function() {
     // Bind the kana input to `wanakana`
     wanakana.bind(document.getElementById("kana-input"));
@@ -62,7 +59,6 @@ export default {
       );
     },
     stop: function() {
-      this.stopTest();
       this.$store.dispatch("stopTest");
       this.calculateScore();
     },
