@@ -10,15 +10,15 @@
       <tbody>
         <tr>
           <td>CPM*</td>
-          <td>TODO: testCPM</td>
+          <td>{{ currentCPM }}</td>
         </tr>
         <tr>
           <td>Score</td>
-          <td>TODO: correct / TODO: (correct + incorrect)</td>
+          <td>{{ correct }} / {{ correct + incorrect }}</td>
         </tr>
         <tr>
           <td>Average CPM*</td>
-          <td>TODO: averageCPM</td>
+          <td>{{ averageCPM }}</td>
         </tr>
       </tbody>
     </table>
@@ -35,7 +35,7 @@ export default {
   },
   method: {
     reset: function() {
-      console.warn('Reset');
+      console.warn("Reset");
 
       // this.showTest = true;
       // this.testRunning = false;
@@ -48,8 +48,17 @@ export default {
     }
   },
   computed: {
+    currentCPM: function() {
+      return this.$store.state.KanaTest.currentCPM;
+    },
     averageCPM: function() {
-      return this.$store.state.averageCPM;
+      return this.$store.state.KanaTest.averageCPM;
+    },
+    correct: function() {
+      return this.$store.state.KanaTest.correct;
+    },
+    incorrect: function() {
+      return this.$store.state.KanaTest.incorrect;
     }
   }
 };

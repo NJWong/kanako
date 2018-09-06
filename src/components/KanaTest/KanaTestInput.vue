@@ -8,7 +8,7 @@
           </div>
         </div>
         <div class="input-container">
-          <input id="kana-input" ref="kana-input" @keyup="handleKeyUp(inputValue)" @keyup.space="submit(inputRef())" @keyup.enter="submit(inputRef())">
+          <input id="kana-input" ref="kana-input" @keyup="handleKeyUp" @keyup.space="submit" @keyup.enter="submit">
           <p class="countdown">Time remaining: <span>{{ countdown }} seconds</span></p>
         </div>
       </div>
@@ -26,14 +26,10 @@ export default {
     return {
       inputValue: "",
       targetValue: "",
-      testRunning: false,
       hasError: false,
       hasPartialMatch: false,
       hasFullMatch: false,
-      correct: 0,
-      incorrect: 0,
-      countdown: 10,
-      testCPM: 0
+      countdown: 10
     };
   },
   props: {
@@ -47,12 +43,9 @@ export default {
     this.generateNextValue();
   },
   methods: {
-    inputRef: function() {
-      return this.$refs["kana-input"];
-    },
     start: function() {
       // Start the test
-      this.testRunning = true;
+      this.$store.dispatch("startTest");
 
       // Set the countdown
       var timer = setInterval(
@@ -70,25 +63,28 @@ export default {
     },
     stop: function() {
       this.stopTest();
-      this.testRunning = false;
+      this.$store.dispatch("stopTest");
       this.calculateScore();
     },
-    handleKeyUp: function(inputValue) {
+    handleKeyUp: function() {
       // Start the test if not already running
-      if (!this.testRunning) {
+      if (!this.running) {
         this.start();
       }
+
+      this.inputValue = this.$refs["kana-input"].value;
 
       // Clear previous status
       this.clearStatus();
 
-      const inputValueRomaji = wanakana.toRomaji(inputValue);
+      // Convert the romaji values for comparison
+      const inputValueRomaji = wanakana.toRomaji(this.inputValue);
       const targetValueRomaji = wanakana.toRomaji(this.targetValue);
 
       // Check input value is not empty
-      if (inputValue.length > 0) {
+      if (this.inputValue.length > 0) {
         // Check for full match
-        if (inputValue === this.targetValue) {
+        if (this.inputValue === this.targetValue) {
           this.hasFullMatch = true;
         }
         // Check for partial match using Romaji conversion
@@ -101,14 +97,14 @@ export default {
         }
       }
     },
-    submit: function(inputRef) {
+    submit: function() {
       // Update score
-      inputRef.value.trim() === this.targetValue
-        ? (this.correct += 1)
-        : (this.incorrect += 1);
+      this.inputRef.value.trim() === this.targetValue
+        ? this.$store.dispatch("incrementCorrect")
+        : this.$store.dispatch("incrementIncorrect");
 
-      // Reset input field and statuses
-      inputRef.value = "";
+      // Reset input field and status
+      this.$refs["kana-input"].value = "";
       this.clearStatus();
 
       // Get next target value
@@ -139,15 +135,31 @@ export default {
     calculateScore: function() {
       const correctCharacters = this.correct * 3;
       const timeFactor = 60 / 60;
-      this.testCPM = correctCharacters * timeFactor;
+      const currentCPM = correctCharacters * timeFactor;
 
-      this.$store.commit("updateAverageCPM", this.testCPM);
-      this.$store.commit("increaseGameCount");
+      this.$store.dispatch("updateCurrentCPM", { currentCPM: currentCPM });
+      this.$store.dispatch("updateAverageCPM", { newCPM: this.currentCPM });
+      this.$store.dispatch("increaseGameCount");
     }
   },
   computed: {
     difficulty: function() {
-      return this.$store.state.difficulty;
+      return this.$store.state.KanaTest.difficulty;
+    },
+    running: function() {
+      return this.$store.state.KanaTest.running;
+    },
+    correct: function() {
+      return this.$store.state.KanaTest.correct;
+    },
+    incorrect: function() {
+      return this.$store.state.KanaTest.incorrect;
+    },
+    currentCPM: function() {
+      return this.$store.state.KanaTest.currentCPM;
+    },
+    inputRef: function() {
+      return this.$refs["kana-input"];
     }
   }
 };
