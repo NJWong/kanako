@@ -14,10 +14,10 @@
     <div class="navbar-menu" :class="{ 'is-active': navIsOpen }">
       <div class="navbar-start">
         <span class="navbar-item">
-          <router-link to="/home">Home</router-link>
+          <router-link to="/home"><span @click="closeNav">Home</span></router-link>
         </span>
-        <span class="navbar-item">
-          <router-link to="/kana-test">Kana Test</router-link>
+        <span class="navbar-item" @click="closeNav">
+          <router-link to="/kana-test"><span @click="closeNav">Kana Test</span></router-link>
         </span>
       </div>
     </div>
@@ -35,7 +35,13 @@ export default {
   methods: {
     toggleNav: function() {
       this.navIsOpen = !this.navIsOpen;
+    },
+    closeNav: function() {
+      this.navIsOpen = false;
     }
   }
 };
 </script>
+
+<style scoped lang="scss">
+</style>

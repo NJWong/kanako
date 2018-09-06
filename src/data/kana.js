@@ -56,15 +56,15 @@ export function generateKanaList(difficulty) {
     case 1:
       return [].concat(aLine);
     case 2:
-      return [].concat(aLine, kaLine);
+      return [].concat(kaLine);
     case 3:
-      return [].concat(aLine, kaLine, saLine);
+      return [].concat(gaLine);
     case 4:
-      return [].concat(aLine, kaLine, saLine, taLine);
+      return [].concat(saLine);
     case 5:
-      return [].concat(aLine, kaLine, saLine, taLine, naLine);
+      return [].concat(zaLine);
     case 6:
-      return [].concat(aLine, kaLine, saLine, taLine, naLine, haLine);
+      return [].concat(aLine, kaLine, gaLine, saLine, zaLine);
     case 7:
       return [].concat(aLine, kaLine, saLine, taLine, naLine, haLine, maLine);
     case 8:

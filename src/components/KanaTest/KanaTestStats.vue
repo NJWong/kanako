@@ -23,9 +23,7 @@
       </tbody>
     </table>
     <button class="button is-primary" @click="reset">Try again!</button>
-    
-      <router-link class="button is-secondary" to="/">Change level</router-link>
-    
+    <button class="button is-secondary" @click="changeLevel">Change level</button>
     <h5 class="helper-text">*CPM = Characters Per Minute</h5>
   </div>
 </template>
@@ -39,6 +37,10 @@ export default {
   methods: {
     reset: function() {
       this.$store.dispatch("resetTest");
+      this.$store.dispatch("setView", { view: "input" });
+    },
+    changeLevel: function() {
+      this.$store.dispatch("setView", { view: "levels" });
     }
   },
   computed: {

@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     KanaTest: {
+      view: "levels",
       difficulty: 1,
       averageCPM: 0,
       gameCount: 0,
@@ -13,15 +14,20 @@ export default new Vuex.Store({
       correct: 0,
       incorrect: 0,
       currentCPM: 0,
-      showTest: false
     }
   },
   mutations: {
+    setView: function(state, newView) {
+      state.KanaTest.view = newView;
+    },
     increaseDifficulty: function(state) {
       state.KanaTest.difficulty += 1;
     },
     decreaseDifficulty: function(state) {
       state.KanaTest.difficulty -= 1;
+    },
+    setDifficulty: function(state, newDifficulty) {
+      state.KanaTest.difficulty = newDifficulty;
     },
     increaseGameCount: function(state) {
       state.KanaTest.gameCount += 1;
@@ -31,11 +37,9 @@ export default new Vuex.Store({
     },
     startTest: function(state) {
       state.KanaTest.running = true;
-      state.KanaTest.showTest = true;
     },
     stopTest: function(state) {
       state.KanaTest.running = false;
-      state.KanaTest.showTest = false;
     },
     incrementCorrect: function(state) {
       state.KanaTest.correct += 1;
@@ -50,15 +54,20 @@ export default new Vuex.Store({
       state.KanaTest.currentCPM = 0;
       state.KanaTest.correct = 0;
       state.KanaTest.incorrect = 0;
-      state.KanaTest.showTest = true;
     }
   },
   actions: {
+    setView: function(context, payload) {
+      context.commit("setView", payload.view);
+    },
     increaseDifficulty: function(context) {
       context.commit("increaseDifficulty");
     },
     decreaseDifficulty: function(context) {
       context.commit("decreaseDifficulty");
+    },
+    setDifficulty: function(context, payload) {
+      context.commit("setDifficulty", payload.difficulty);
     },
     increaseGameCount: function(context) {
       context.commit("increaseGameCount");
@@ -75,9 +84,11 @@ export default new Vuex.Store({
     },
     startTest: function(context) {
       context.commit("startTest");
+      context.commit("setView", "input");
     },
     stopTest: function(context) {
       context.commit("stopTest");
+      context.commit("setView", "stats");
     },
     incrementCorrect: function(context) {
       context.commit("incrementCorrect");

@@ -1,15 +1,18 @@
 <template>
-  <KanaTestInput v-if="showTest"/>
-  <KanaTestStats v-else/>
+  <KanaTestLevels v-if="view === 'levels'"/>
+  <KanaTestInput v-else-if="view === 'input'"/>
+  <KanaTestStats v-else-if="view === 'stats'"/>
 </template>
 
 <script>
+import KanaTestLevels from "@/components/KanaTest/KanaTestLevels";
 import KanaTestInput from "@/components/KanaTest/KanaTestInput";
 import KanaTestStats from "@/components/KanaTest/KanaTestStats";
 
 export default {
   name: "TheKanaTest",
   components: {
+    KanaTestLevels,
     KanaTestInput,
     KanaTestStats
   },
@@ -18,8 +21,8 @@ export default {
   },
   methods: {},
   computed: {
-    showTest: function() {
-      return this.$store.state.KanaTest.showTest;
+    view: function() {
+      return this.$store.state.KanaTest.view;
     }
   }
 };

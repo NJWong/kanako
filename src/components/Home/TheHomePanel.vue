@@ -1,13 +1,14 @@
 <template>
   <div>
-    THE HOME PANEL
+    HOME PANEL
   </div>
 </template>
 
 <script>
 export default {
   name: "TheHomePanel",
-  components: {}
+  components: {},
+  methods: {}
 };
 </script>
 
