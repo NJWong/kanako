@@ -20,10 +20,6 @@ export default {
 </script>
 
 <style lang="scss">
-body {
-  background-color: #fafafa;
-}
-
 .app-content {
   padding: 0 10px;
 

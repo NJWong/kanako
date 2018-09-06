@@ -1,14 +1,26 @@
 <template>
   <div class="kana-panel">
-    <form @submit.prevent>
-      <div>
+    <form @submit.prevent class="container">
+      <div class="section">
         <div class="target-container">
-          <div class="text-container">
+          <div class="target-text">
             <span :class="{ error: hasError, warning: hasPartialMatch, success: hasFullMatch }">{{ targetValue }}</span>
           </div>
         </div>
-        <div class="input-container">
-          <input id="kana-input" ref="kana-input" @keyup="handleKeyUp" @keyup.space="submit" @keyup.enter="submit">
+        <div class="kana-input-container">
+          <div class="field">
+            <div class="control">
+              <input
+                id="kana-input"
+                ref="kana-input"
+                class="input"
+                :class="{ 'is-danger': hasError, 'is-warning': hasPartialMatch, 'is-success': hasFullMatch }"
+                type="text"
+                @keyup="handleKeyUp"
+                @keyup.space="submit"
+                @keyup.enter="submit">
+            </div>
+          </div>
           <p class="countdown">Time remaining: <span>{{ countdown }} seconds</span></p>
         </div>
       </div>
@@ -29,7 +41,7 @@ export default {
       hasError: false,
       hasPartialMatch: false,
       hasFullMatch: false,
-      countdown: 10
+      countdown: 30
     };
   },
   mounted: function() {
@@ -130,7 +142,7 @@ export default {
     },
     calculateScore: function() {
       const correctCharacters = this.correct * 3;
-      const timeFactor = 60 / 60;
+      const timeFactor = 30 / 60;
       const currentCPM = correctCharacters * timeFactor;
 
       this.$store.dispatch("updateCurrentCPM", { currentCPM: currentCPM });
@@ -169,15 +181,16 @@ $teal-blue: rgb(90, 200, 250);
 $white: rgb(255, 255, 255);
 
 .target-container {
-  .text-container {
-    font-size: 30px;
-    margin: 20px 0;
+  padding-bottom: 25px;
+
+  .target-text {
+    font-size: 36px;
     border: 1px dashed #e1e1e1;
   }
 
   span {
     display: block;
-    padding: 10px 20px;
+    padding: 15px;
     transition: color 0.15s;
     background-color: $white;
   }
@@ -195,14 +208,10 @@ $white: rgb(255, 255, 255);
   color: $error-red;
 }
 
-.input-container {
+.kana-input-container {
   input {
-    font-size: 20px;
+    font-size: 28px;
     text-align: center;
-
-    &:focus {
-      border-color: $teal-blue;
-    }
   }
 }
 

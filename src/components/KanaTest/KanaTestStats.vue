@@ -23,7 +23,10 @@
       </tbody>
     </table>
     <button class="button is-primary" @click="reset">Try again!</button>
-    <h5>*CPM = Characters Per Minute</h5>
+    
+      <router-link class="button is-secondary" to="/">Change level</router-link>
+    
+    <h5 class="helper-text">*CPM = Characters Per Minute</h5>
   </div>
 </template>
 
@@ -56,6 +59,9 @@ export default {
 </script>
 <style scoped lang="scss">
 .results-table {
-  margin: 25px auto;
+  margin: 30px auto;
+}
+.helper-text {
+  padding: 20px 0;
 }
 </style>

@@ -13,7 +13,7 @@ export default new Vuex.Store({
       correct: 0,
       incorrect: 0,
       currentCPM: 0,
-      showTest: true
+      showTest: false
     }
   },
   mutations: {
