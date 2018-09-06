@@ -2,7 +2,7 @@
   <nav class="navbar is-transparent">
     <div class="navbar-brand">
       <span class="navbar-item">
-        <router-link to="/">Kanako Logo</router-link>
+        <router-link to="/">Kanako Beta</router-link>
       </span>
       <div class="navbar-burger burger" :class="{ 'is-active': navIsOpen }" @click="toggleNav">
         <span></span>

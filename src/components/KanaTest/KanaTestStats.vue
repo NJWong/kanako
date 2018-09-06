@@ -1,7 +1,7 @@
 <template>
   <div class="test-stats">
     <h2>Game over!</h2>
-    <table class="results-table">
+    <table class="table is-striped is-bordered results-table">
       <thead>
         <tr>
           <th colspan="2">Results</th>
@@ -9,15 +9,15 @@
       </thead>
       <tbody>
         <tr>
-          <td>CPM*</td>
+          <td>CPM*:</td>
           <td>{{ currentCPM }}</td>
         </tr>
         <tr>
-          <td>Score</td>
+          <td>Correct:</td>
           <td>{{ correct }} / {{ correct + incorrect }}</td>
         </tr>
         <tr>
-          <td>Average CPM*</td>
+          <td>Average CPM*:</td>
           <td>{{ averageCPM }}</td>
         </tr>
       </tbody>
@@ -57,9 +57,5 @@ export default {
 <style scoped lang="scss">
 .results-table {
   margin: 25px auto;
-
-  thead {
-    text-align: center;
-  }
 }
 </style>
