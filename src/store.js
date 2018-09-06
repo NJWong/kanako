@@ -8,12 +8,12 @@ export default new Vuex.Store({
     KanaTest: {
       view: "levels",
       difficulty: 1,
-      averageCPM: 0,
-      gameCount: 0,
       running: false,
       correct: 0,
       incorrect: 0,
+      averageCPM: 0,
       currentCPM: 0,
+      gameCount: 0
     }
   },
   mutations: {
