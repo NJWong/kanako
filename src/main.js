@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
-require("bulma");
+require("purecss");
 
 Vue.config.productionTip = false;
 

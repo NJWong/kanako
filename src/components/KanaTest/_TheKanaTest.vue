@@ -32,7 +32,6 @@ export default {
 <style scoped lang="scss">
 .kana-panel,
 .test-stats {
-  background-color: #fafafa;
   text-align: center;
 }
 </style>

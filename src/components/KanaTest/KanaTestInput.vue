@@ -1,20 +1,20 @@
 <template>
   <div class="kana-panel">
-    <form @submit.prevent class="container">
-      <div class="section">
+    <form @submit.prevent>
+      <div>
         <div class="target-container">
           <div class="target-text">
             <span :class="{ error: hasError, warning: hasPartialMatch, success: hasFullMatch }">{{ targetValue }}</span>
           </div>
         </div>
         <div class="kana-input-container">
-          <div class="field">
-            <div class="control">
+          <div>
+            <div>
               <input
                 id="kana-input"
                 ref="kana-input"
                 class="input"
-                :class="{ 'is-danger': hasError, 'is-warning': hasPartialMatch, 'is-success': hasFullMatch }"
+                :class="{ error: hasError, warning: hasPartialMatch, success: hasFullMatch }"
                 type="text"
                 @keyup="handleKeyUp"
                 @keyup.space="submit"
@@ -25,15 +25,23 @@
         </div>
       </div>
     </form>
+    <KanaButton label="Instructions" :onClick="toggleInstructions"/>
+    <div v-if="showInstructions">
+      Instructions go here!
+    </div>
   </div>
 </template>
 
 <script>
 import * as wanakana from "wanakana";
 import { generateKanaList } from "@/data/kana";
+import KanaButton from "@/components/Global/KanaButton";
 
 export default {
   name: "KanaTestInput",
+  components: {
+    KanaButton
+  },
   data: function() {
     return {
       inputValue: "",
@@ -41,7 +49,8 @@ export default {
       hasError: false,
       hasPartialMatch: false,
       hasFullMatch: false,
-      countdown: 30
+      countdown: 30,
+      showInstructions: false
     };
   },
   mounted: function() {
@@ -148,6 +157,9 @@ export default {
       this.$store.dispatch("updateCurrentCPM", { currentCPM: currentCPM });
       this.$store.dispatch("updateAverageCPM", { newCPM: this.currentCPM });
       this.$store.dispatch("increaseGameCount");
+    },
+    toggleInstructions: function() {
+      this.showInstructions = !this.showInstructions;
     }
   },
   computed: {
@@ -185,14 +197,13 @@ $white: rgb(255, 255, 255);
 
   .target-text {
     font-size: 36px;
-    border: 1px dashed #e1e1e1;
+    box-shadow: 2px 2px 8px #777;
   }
 
   span {
     display: block;
     padding: 15px;
     transition: color 0.15s;
-    background-color: $white;
   }
 }
 

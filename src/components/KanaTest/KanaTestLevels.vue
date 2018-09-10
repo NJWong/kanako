@@ -1,16 +1,21 @@
 <template>
-  <div class="buttons">
-    <button class="button" @click="startTest(1)">Level 1 - あ-line</button>
-    <button class="button" @click="startTest(2)">Level 2 - か-line</button>
-    <button class="button" @click="startTest(3)">Level 3 - が-line</button>
-    <button class="button" @click="startTest(4)">Level 4 - さ-line</button>
-    <button class="button" @click="startTest(5)">Level 5 - ざ-line</button>
-    <button class="button" @click="startTest(6)">Challenge 1 - あ-line, か-line, が-line, さ-line, ざ-line</button>
+  <div>
+    <KanaButton label="Level 1 - あ-line" :onClick="startTest.bind(this, 1)" />
+    <KanaButton label="Level 2 - か-line" :onClick="startTest.bind(this, 2)" />
+    <KanaButton label="Level 3 - が-line" :onClick="startTest.bind(this, 3)" />
+    <KanaButton label="Level 4 - さ-line" :onClick="startTest.bind(this, 4)" />
+    <KanaButton label="Level 5 - ざ-line" :onClick="startTest.bind(this, 5)" />
+    <KanaButton label="Challenge 1 - あ-line, か-line, が-line, さ-line, ざ-line" :onClick="startTest.bind(this, 6)" />
   </div>
 </template>
 <script>
+import KanaButton from "@/components/Global/KanaButton";
+
 export default {
   name: "KanaTestLevels",
+  components: {
+    KanaButton
+  },
   data: function() {
     return {};
   },
