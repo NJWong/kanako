@@ -11,21 +11,27 @@
         <p>{{ description }}</p>
       </div>
       <div class="kana-card-actions">
-        
+        <KanaButton label="Start Test" :onClick="onClick"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import KanaButton from "@/components/Global/KanaButton";
+
 export default {
   name: "KanaCard",
+  components: {
+    KanaButton
+  },
   props: {
     title: String,
     media: String,
     gradient: String,
     description: String,
-    actions: Array
+    actions: Array,
+    onClick: Function
   }
 };
 </script>
@@ -46,7 +52,7 @@ export default {
 
   &:hover {
     box-shadow: 0 10px 40px #999;
-    transform: translate3d(0px, -1px, 0px);
+    // transform: translate3d(0px, -1px, 0px);
   }
 }
 

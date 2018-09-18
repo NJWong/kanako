@@ -20,17 +20,15 @@ export default {
 }
 
 .kana-button {
-  min-width: 120px;
   background-color: transparent;
-  color: #777;
-  border-color: #777;
-  text-transform: uppercase;
   padding: 8px 16px;
-  box-shadow: 1px 1px 4px #999;
-  transition: box-shadow 0.1s ease-in-out;
+  border: none;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease-in-out;
+  color: #e91e63;
 
   &:hover {
-    box-shadow: 2px 2px 8px #999;
+    background-color: lighten(#e91e63, 40%);
   }
 }
 </style>
