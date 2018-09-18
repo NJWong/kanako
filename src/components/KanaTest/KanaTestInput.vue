@@ -192,6 +192,10 @@ $error-red: rgb(255, 59, 48);
 $teal-blue: rgb(90, 200, 250);
 $white: rgb(255, 255, 255);
 
+.kana-panel {
+  font-family: "Noto Sans JP", sans-serif;
+}
+
 .target-container {
   padding-bottom: 25px;
 

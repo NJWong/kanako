@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     KanaTest: {
-      view: "levels", // Which view to display - "levels", "input", or "stats"
+      view: "levelSelect", // Which view to display - "levelSelect", "input", or "stats"
       difficulty: 1, // Defined in `kana.js`
       running: false, // Test is running or not
       correct: 0, // Total correct answers for current test

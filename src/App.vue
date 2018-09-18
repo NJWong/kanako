@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="kanako-app">
     <TheNav/>
     <div class="app-content">
       <router-view/>
@@ -20,6 +20,19 @@ export default {
 </script>
 
 <style lang="scss">
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+JP:300,400,700&subset=japanese");
+
+.kanako-app {
+  html,
+  button,
+  input,
+  select,
+  textarea,
+  .pure-g [class*="pure-u"] {
+    font-family: "Noto Sans JP", sans-serif;
+  }
+}
+
 .app-content {
   padding: 0 10px;
 

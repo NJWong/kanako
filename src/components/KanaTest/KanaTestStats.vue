@@ -40,7 +40,7 @@ export default {
       this.$store.dispatch("setView", { view: "input" });
     },
     changeLevel: function() {
-      this.$store.dispatch("setView", { view: "levels" });
+      this.$store.dispatch("setView", { view: "levelSelect" });
     }
   },
   computed: {
