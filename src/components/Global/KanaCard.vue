@@ -1,5 +1,5 @@
 <template>
-  <div class="kana-card-container pure-u-1-3">
+  <div class="kana-card-container">
     <div class="kana-card">
       <div class="kana-card-media" :class="gradient">
         <h4>{{ media }}</h4>
@@ -41,11 +41,18 @@ export default {
   text-align: center;
   padding: 20px;
   box-sizing: border-box;
+  flex: 0 1 100%;
+
+  // md
+  @media screen and (min-width: 48em) {
+    flex: 0 1 50%;
+  }
 }
 
 .kana-card {
   overflow: auto;
-  min-height: 250px;
+  min-height: 300px;
+  min-width: 250px;
   box-shadow: 0 4px 15px #888;
   border-radius: 2px;
   transition: box-shadow 0.1s ease-in-out;

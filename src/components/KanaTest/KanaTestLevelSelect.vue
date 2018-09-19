@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="pure-g">
+    <div class="level-cards">
       <KanaCard title="Level 1" media="あ" description="あ、い、う、え、お" gradient="pink" :onClick="startTest.bind(this, 1)"/>
       <KanaCard title="Level 2" media="か" description="か、き、く、け、こ" gradient="blue" :onClick="startTest.bind(this, 2)"/>
       <KanaCard title="Level 3" media="さ" description="さ、し、す、せ、そ" gradient="green" :onClick="startTest.bind(this, 4)"/>
@@ -44,4 +44,9 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+.level-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 </style>

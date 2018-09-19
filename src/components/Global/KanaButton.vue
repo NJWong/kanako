@@ -26,8 +26,10 @@ export default {
   text-transform: uppercase;
   transition: background-color 0.3s ease-in-out;
   color: #e91e63;
+  font-size: 14px;
 
   &:hover {
+    cursor: pointer;
     background-color: lighten(#e91e63, 40%);
   }
 }

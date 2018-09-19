@@ -22,15 +22,20 @@
         </tr>
       </tbody>
     </table>
-    <button class="button is-primary" @click="reset">Try again!</button>
-    <button class="button is-secondary" @click="changeLevel">Change level</button>
+    <KanaButton label="Try again" :onClick="reset"/>
+    <KanaButton label="Change Level" :onClick="changeLevel"/>
     <h5 class="helper-text">*CPM = Characters Per Minute</h5>
   </div>
 </template>
 
 <script>
+import KanaButton from "@/components/Global/KanaButton";
+
 export default {
   name: "KanaTestStats",
+  components: {
+    KanaButton
+  },
   data: function() {
     return {};
   },
