@@ -30,6 +30,11 @@ textarea {
   font-family: "Noto Sans JP", sans-serif;
 }
 
+body {
+  margin: 0;
+  background-color: #eeeeee;
+}
+
 .app-content {
   padding: 0 10px;
 

@@ -58,51 +58,13 @@ export function generateKanaList(difficulty) {
     case 2:
       return [].concat(kaLine);
     case 3:
-      return [].concat(gaLine);
-    case 4:
       return [].concat(saLine);
+    case 4:
+      return [].concat(taLine);
     case 5:
-      return [].concat(zaLine);
-    case 6:
-      return [].concat(aLine, kaLine, gaLine, saLine, zaLine);
-    case 7:
-      return [].concat(aLine, kaLine, saLine, taLine, naLine, haLine, maLine);
-    case 8:
-      return [].concat(
-        aLine,
-        kaLine,
-        saLine,
-        taLine,
-        naLine,
-        haLine,
-        maLine,
-        yaLine
-      );
-    case 9:
-      return [].concat(
-        aLine,
-        kaLine,
-        saLine,
-        taLine,
-        naLine,
-        haLine,
-        maLine,
-        yaLine,
-        raLine
-      );
-    case 10:
-      return [].concat(
-        aLine,
-        kaLine,
-        saLine,
-        taLine,
-        naLine,
-        haLine,
-        maLine,
-        yaLine,
-        raLine,
-        waLine
-      );
+      return [].concat(aLine, kaLine, saLine, taLine);
+    default:
+      console.error("Error: Unknown level -", difficulty);
   }
 }
 

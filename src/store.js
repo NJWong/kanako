@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     KanaTest: {
       view: "levelSelect", // Which view to display - "levelSelect", "input", or "stats"
+      isAnimating: false,
       difficulty: 1, // Defined in `kana.js`
       running: false, // Test is running or not
       correct: 0, // Total correct answers for current test
@@ -19,6 +20,9 @@ export default new Vuex.Store({
   mutations: {
     setView: function(state, newView) {
       state.KanaTest.view = newView;
+    },
+    setIsAnimating: function(state, newIsAnimating) {
+      state.KanaTest.isAnimating = newIsAnimating;
     },
     setDifficulty: function(state, newDifficulty) {
       state.KanaTest.difficulty = newDifficulty;
@@ -53,6 +57,9 @@ export default new Vuex.Store({
   actions: {
     setView: function(context, payload) {
       context.commit("setView", payload.view);
+    },
+    setIsAnimating: function(context, payload) {
+      context.commit("setIsAnimating", payload);
     },
     setDifficulty: function(context, payload) {
       context.commit("setDifficulty", payload.difficulty);

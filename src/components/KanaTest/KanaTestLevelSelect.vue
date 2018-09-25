@@ -1,9 +1,11 @@
 <template>
   <div>
     <div class="level-cards">
-      <KanaCard title="Level 1" media="あ" description="あ、い、う、え、お" gradient="pink" :onClick="startTest.bind(this, 1)"/>
-      <KanaCard title="Level 2" media="か" description="か、き、く、け、こ" gradient="blue" :onClick="startTest.bind(this, 2)"/>
-      <KanaCard title="Level 3" media="さ" description="さ、し、す、せ、そ" gradient="green" :onClick="startTest.bind(this, 4)"/>
+      <KanaCard title="あ" bgColor="teal" :onClick="startTest.bind(this, 1)"/>
+      <KanaCard title="か" bgColor="pink" :onClick="startTest.bind(this, 2)"/>
+      <KanaCard title="さ" bgColor="purple" :onClick="startTest.bind(this, 3)"/>
+      <KanaCard title="た" bgColor="blue" :onClick="startTest.bind(this, 4)"/>
+      <KanaCard title="Challenge #1" bgColor="yellow" variant="full-width" :onClick="startTest.bind(this, 5)"/>
     </div>
   </div>
 </template>
@@ -24,7 +26,11 @@ export default {
     startTest: function(difficulty) {
       this.$store.dispatch("setDifficulty", { difficulty: difficulty });
       this.$store.dispatch("resetTest");
-      this.$store.dispatch("setView", { view: "input" });
+      this.$store.dispatch("setIsAnimating", true);
+
+      setTimeout(() => {
+        this.$store.dispatch("setView", { view: "input" });
+      }, 500);
     }
   },
   computed: {
